@@ -37,7 +37,7 @@ from my_santander_finance.definitions import ROOT_DIR
 class Settings(BaseSettings):
     # general
     SANTANDER_LOGIN_URL     = "https://www2.personas.santander.com.ar/obp-webapp/angular/#!/login"
-    CHROME_DRIVER_DIR       = join(ROOT_DIR, "chromedriver.exe")
+    CHROME_DRIVER_DIR       = join(ROOT_DIR, "driver\\chromedriver.exe")
     DOWNLOAD_DIR            = join(ROOT_DIR, 'download\\')
     DOWNLOAD_CUENTA_DIR     = DOWNLOAD_DIR + "debit"
     CVS_TEMP_DIR            = join(ROOT_DIR, "temp")
