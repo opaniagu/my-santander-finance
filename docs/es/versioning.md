@@ -8,7 +8,7 @@ Para el versionado utilizo la herramienta [bump2version](https://github.com/c4ur
 poetry add bumpversion
 ```
 
-Al utilizar 'poetry', y generar un nuevo proyecto se crea un archivo '__init__.py', con el siguiente contenido:
+Al utilizar "poetry", y generar un nuevo proyecto se crea un archivo "__init__.py", con el siguiente contenido:
 
 ```console
 $ cat __init__.py
@@ -67,3 +67,14 @@ $ git add .
 $ git commit -m "<message>"
 $ git push
 ```
+
+realizar un PR en GitHub y el merge
+(web)
+
+cambiar a la rama main y actualizar el repositorio local
+git branch
+pit pull
+
+
+
+
