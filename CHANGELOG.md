@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 
-## [0.1.1] - 2022-07-07
+## [0.2.0] - 2022-07-07
 ### Added
 - Start using "changelog" format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Start using "version" based on [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
