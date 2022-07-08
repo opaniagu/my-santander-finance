@@ -13,6 +13,7 @@ import time
 import os
 
 from my_santander_finance.settings import settings
+from my_santander_finance.func_files import tiny_file_rename
 
 def close_session(driver):
     """ -- cerrar session -- """
@@ -105,9 +106,13 @@ def download_debit(driver: webdriver):
     try:
         element_h = WebDriverWait(driver,20).until(EC.visibility_of_element_located((By.CLASS_NAME ,'descargar')))
         element_h.click()
+        sleep(3)
+        new_file_name = datetime.now().strftime('debit_%Y-%m-%d_%H#%M#%S.xls')
+        tiny_file_rename(new_file_name, settings.DOWNLOAD_CUENTA_DIR)
+
     except:
         pass
-    sleep(3)
+    
 
 
 # ----------------------------------------------------
