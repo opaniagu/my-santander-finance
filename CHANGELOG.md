@@ -3,6 +3,16 @@
 ## [Unreleased]
 
 
+## [0.2.2] - 2022-07-08
+### Added
+- Rename downloaded files to debit_yyyy-mm-dd_hh#mm#ss.xls mask.
+
+
+## [0.2.1] - 2022-07-07
+### Added
+- Validate (empty) env or .env variables, before start to login to bank url.
+
+
 ## [0.2.0] - 2022-07-07
 ### Added
 - Start using "changelog" format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),

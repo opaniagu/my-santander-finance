@@ -18,7 +18,7 @@ def create_dir(directory):
             # directory already exists
             pass
 
-                
+#--------------------------------------------------------------------------                
 if __name__ == "__main__":
     print(get_list_files(settings.DOWNLOAD_CUENTA_DIR))
     
