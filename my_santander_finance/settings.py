@@ -30,7 +30,7 @@ Tambien es compatible con dotenv (.env)
 import os
 from os.path import join
 
-from pydantic import BaseSettings
+from pydantic import BaseSettings, Field, ValidationError
 
 from my_santander_finance.definitions import ROOT_DIR
 
@@ -45,13 +45,16 @@ class Settings(BaseSettings):
     # base de datos
     DATABASE_SQLITE         = "santander.sqlite"
     
-    # datos para acceso a santander
-    DNI: str
-    CLAVE: str
-    USUARIO: str
+    # datos para acceso a santander (requeridos)
+    DNI: str = Field(...)
+    CLAVE: str = Field(...)
+    USUARIO: str = Field(...)
 
 
 # debug
 # print(Settings().dict())
-
-settings = Settings()
+try:
+    settings = Settings()
+except ValidationError as e:
+    print(e)
+    quit()
