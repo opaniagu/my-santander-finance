@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from time import sleep
 
 from selenium import webdriver
@@ -52,7 +52,7 @@ def configure_driver():
     }
     options.add_experimental_option("prefs", prefs)
 
-    service = Service(executable_path=settings.CHROME_DRIVER_DIR)
+    service = Service(executable_path=settings.CHROME_DRIVER_EXE)
 
     return options, service
 
@@ -108,9 +108,14 @@ def download_debit(driver: webdriver):
         element_h.click()
         sleep(3)
         new_file_name = datetime.now().strftime("debit_%Y-%m-%d_%H#%M#%S.xls")
+        # print(f"{new_file_name}")
+        # print(f"{settings.DOWNLOAD_CUENTA_DIR}")
         tiny_file_rename(new_file_name, settings.DOWNLOAD_CUENTA_DIR)
-    except:  # noqa: E722
-        pass
+
+    except Exception as ex:
+        print("get_debit:: Exception")
+        print(ex)
+        # pass
 
 
 # ----------------------------------------------------

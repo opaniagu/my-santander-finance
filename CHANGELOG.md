@@ -2,12 +2,17 @@
 
 ## [Unreleased]
 
+## [0.2.5] - 2022-07-09
+### Added
+- Add support automatic download chromedriver on windows (version 103 and 104)
+
 
 ## [0.2.4] - 2022-07-09
 ### Added
 - Add support to home directory on windows
 - Add .env.example
 - Change app name to "sanfi" (poetry build process - pyproject.toml)
+
 
 ## [0.2.3] - 2022-07-08
 ### Added

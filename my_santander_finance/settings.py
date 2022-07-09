@@ -37,16 +37,25 @@ from pydantic import BaseSettings, Field, ValidationError
 
 from my_santander_finance.definitions import HOME_DIR
 
+# global, TODO! fix
+GLOBAL_APP_NAME = "sanfi"
+GLOBAL_LOCAL_DIR = join(HOME_DIR, "." + GLOBAL_APP_NAME)
+GLOBAL_ENV_FILE = join(GLOBAL_LOCAL_DIR, ".env")
+
 
 class Settings(BaseSettings):
     # general
-    APP_NAME = "sanfi"
-    LOCAL_DIR = join(HOME_DIR, "." + APP_NAME)
+    APP_NAME = GLOBAL_APP_NAME
+    LOCAL_DIR = GLOBAL_LOCAL_DIR
     SANTANDER_LOGIN_URL = "https://www2.personas.santander.com.ar/obp-webapp/angular/#!/login"
-    CHROME_DRIVER_DIR = join(LOCAL_DIR, "driver\\chromedriver.exe")
     DOWNLOAD_DIR = join(LOCAL_DIR, "download\\")
     DOWNLOAD_CUENTA_DIR = DOWNLOAD_DIR + "debit"
     CVS_TEMP_DIR = join(LOCAL_DIR, "temp")
+
+    # chromedriver
+    CHROME_DRIVER_DIR = join(LOCAL_DIR, "driver")
+    CHROME_DRIVER_EXE = join(LOCAL_DIR, "driver\\chromedriver.exe")
+    CHROME_DRIVER_ZIP = join(LOCAL_DIR, "driver\\chromedriver.zip")
 
     # base de datos
     DATABASE_SQLITE = "santander.sqlite"
@@ -56,9 +65,13 @@ class Settings(BaseSettings):
     CLAVE: str = Field(...)
     USUARIO: str = Field(...)
 
+    class Config:
+        env_file = GLOBAL_ENV_FILE
+
 
 # debug
 # print(Settings().dict())
+
 try:
     settings = Settings()
 except ValidationError as e:

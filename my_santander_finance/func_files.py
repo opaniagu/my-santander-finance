@@ -17,7 +17,10 @@ def tiny_file_rename(newname, folder_of_download, time_to_wait=60):
         )
     except ValueError:
         # if dir is empty....
+        print("tiny_file_rename:: dir is empty?")
         return
+
+    # print(f"tiny_file_rename - filename:: {filename}")
 
     while ".part" in filename:
         time.sleep(1)

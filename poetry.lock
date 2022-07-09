@@ -2604,7 +2604,7 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "f79464008ab563c34b457bb00760616f12754c1452d4e34a2ac89bfa45685a59"
+content-hash = "91d45e27255a16657113e228f898ec393f500e3915500a131e27a6e9eac95a3a"
 
 [metadata.files]
 async-generator = [

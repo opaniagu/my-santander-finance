@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "my-santander-finance"
-version = "0.2.4"
+version = "0.2.5"
 description = "automated process to obtain the consumption of the bank credit and debit cards, classify them and generate a dashboard"
 authors = ["Oscar Paniagua <opaniagu@gmail.com>"]
 license = "MIT"
@@ -33,6 +33,7 @@ flake8 = "^4.0.1"
 black = "^22.6.0"
 isort = "^5.10.1"
 pre-commit = "^2.19.0"
+requests = "^2.28.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^4.0.1"
