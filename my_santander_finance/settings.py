@@ -13,7 +13,11 @@ Para hacerlo desde la linea de comandos, abrir una terminal:
 
 c:\>setx DNI "12345678"
 
-Se tiene que tener en cuenta, que para que se vean lso cambios,
+Para  comprobar el valor
+
+echo %DNI%
+
+Se tiene que tener en cuenta, que para que se vean los cambios,
 se tiene que cerrar y abrir una nueva terminal
 
 c:\>set DNI
@@ -31,16 +35,18 @@ from os.path import join
 
 from pydantic import BaseSettings, Field, ValidationError
 
-from my_santander_finance.definitions import ROOT_DIR
+from my_santander_finance.definitions import HOME_DIR
 
 
 class Settings(BaseSettings):
     # general
+    APP_NAME = "sanfi"
+    LOCAL_DIR = join(HOME_DIR, "." + APP_NAME)
     SANTANDER_LOGIN_URL = "https://www2.personas.santander.com.ar/obp-webapp/angular/#!/login"
-    CHROME_DRIVER_DIR = join(ROOT_DIR, "driver\\chromedriver.exe")
-    DOWNLOAD_DIR = join(ROOT_DIR, "download\\")
+    CHROME_DRIVER_DIR = join(LOCAL_DIR, "driver\\chromedriver.exe")
+    DOWNLOAD_DIR = join(LOCAL_DIR, "download\\")
     DOWNLOAD_CUENTA_DIR = DOWNLOAD_DIR + "debit"
-    CVS_TEMP_DIR = join(ROOT_DIR, "temp")
+    CVS_TEMP_DIR = join(LOCAL_DIR, "temp")
 
     # base de datos
     DATABASE_SQLITE = "santander.sqlite"

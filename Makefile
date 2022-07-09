@@ -1,5 +1,6 @@
 all:
-	poetry shell
+# 	poetry shell
+#	make lint
 	poetry version patch
 	git add .
 	git commit -m "patching.."	
