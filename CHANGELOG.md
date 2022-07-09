@@ -3,6 +3,11 @@
 ## [Unreleased]
 
 
+## [0.2.3] - 2022-07-08
+### Added
+- Add support to lint
+
+
 ## [0.2.2] - 2022-07-08
 ### Added
 - Rename downloaded files to debit_yyyy-mm-dd_hh#mm#ss.xls mask.
@@ -27,4 +32,3 @@
 
 ### Changed
 - Start using 'en' (English) as default language comment code
-
