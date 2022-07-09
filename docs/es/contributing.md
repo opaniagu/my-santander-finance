@@ -20,7 +20,7 @@ git checkout -b my-new-feature-branch
 # make your changes...
 
 # 5. Fix formatting and imports
-make format
+make lint
 # uses black to enforce formatting and isort to fix imports
 # (https://github.com/ambv/black, https://github.com/timothycrosley/isort)
 

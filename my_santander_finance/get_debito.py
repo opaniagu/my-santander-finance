@@ -1,55 +1,54 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-
-from time import sleep
 import datetime
-import time
-import os
+from time import sleep
 
-from my_santander_finance.settings import settings
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+
 from my_santander_finance.func_files import tiny_file_rename
+from my_santander_finance.settings import settings
+
 
 def close_session(driver):
-    """ -- cerrar session -- """
+    """-- cerrar session --"""
     # click boton salir
     my_xpath = '//*[@id="topbar"]/div[1]/div/div[3]/a[5]'
-    element = WebDriverWait(driver,20).until(EC.visibility_of_element_located((By.XPATH ,my_xpath)))
+    element = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, my_xpath)))
     element.click()
     # aca aparece el modal: No | Si
     # click boton Si
-    my_xpath = ' /html/body/div[2]/md-dialog/topbar-logout-dialog/div/md-dialog-actions/div[2]/obp-boton/button'
-    element = WebDriverWait(driver,20).until(EC.visibility_of_element_located((By.XPATH ,my_xpath)))
+    my_xpath = " /html/body/div[2]/md-dialog/topbar-logout-dialog/div/md-dialog-actions/div[2]/obp-boton/button"
+    element = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, my_xpath)))
     element.click()
     # end
     driver.close()
-    
+
 
 def send_click_and_end(driver: webdriver, my_xpath: str):
     try:
-        element = WebDriverWait(driver,20).until(EC.visibility_of_element_located((By.XPATH, my_xpath)))
+        element = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, my_xpath)))
         element.click()
     except TimeoutException as ex:
-            print(ex.message)
-            # logout
-            close_session(driver=driver)
+        print(ex.message)
+        # logout
+        close_session(driver=driver)
 
 
 def configure_driver():
     options = Options()
     options.add_argument("start-maximized")
     # to supress the error messages/logs
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
     prefs = {
-            "profile.default_content_settings.popups": 0,
-            "download.default_directory": settings.DOWNLOAD_CUENTA_DIR + '\\',      #IMPORTANT - ENDING SLASH V IMPORTANT
-            "directory_upgrade": True
+        "profile.default_content_settings.popups": 0,
+        "download.default_directory": settings.DOWNLOAD_CUENTA_DIR + "\\",  # IMPORTANT - ENDING SLASH V IMPORTANT
+        "directory_upgrade": True,
     }
     options.add_experimental_option("prefs", prefs)
 
@@ -83,10 +82,11 @@ def login(driver: webdriver):
     # -- end login --
 
 
-
 def download_debit(driver: webdriver):
     # -- ingreso a 'Cuentas ' --
-    my_xpath = '//*[@id="main-view"]/home/div/div/div[2]/div[1]/div/account-card/md-card/md-card-content/div[2]/div/button[1]'
+    my_xpath = (
+        '//*[@id="main-view"]/home/div/div/div[2]/div[1]/div/account-card/md-card/md-card-content/div[2]/div/button[1]'
+    )
     send_click_and_end(driver, my_xpath)
     sleep(3)
     # -- end ingreso a 'Cuentas ' --
@@ -97,22 +97,20 @@ def download_debit(driver: webdriver):
     send_click_and_end(driver, my_xpath)
     sleep(3)
     # click en el boton buscar
-    my_xpath = '//*[@id="grilla"]/cuentas-inicio-movimientos/div[2]/obp-selector/div/ng-transclude/cuentas-buscador/form/div[2]/obp-boton'
+    my_xpath = '//*[@id="grilla"]/cuentas-inicio-movimientos/div[2]/obp-selector/div/ng-transclude/cuentas-buscador/form/div[2]/obp-boton'  # noqa: E501
     send_click_and_end(driver, my_xpath)
     sleep(3)
     # -- end set 60 dias --
 
     # click en href 'descargar'
     try:
-        element_h = WebDriverWait(driver,20).until(EC.visibility_of_element_located((By.CLASS_NAME ,'descargar')))
+        element_h = WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.CLASS_NAME, "descargar")))
         element_h.click()
         sleep(3)
-        new_file_name = datetime.now().strftime('debit_%Y-%m-%d_%H#%M#%S.xls')
+        new_file_name = datetime.now().strftime("debit_%Y-%m-%d_%H#%M#%S.xls")
         tiny_file_rename(new_file_name, settings.DOWNLOAD_CUENTA_DIR)
-
-    except:
+    except:  # noqa: E722
         pass
-    
 
 
 # ----------------------------------------------------
@@ -122,5 +120,3 @@ if __name__ == "__main__":
     login(driver=driver)
     download_debit(driver)
     close_session(driver=driver)
-
-

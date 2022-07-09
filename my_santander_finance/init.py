@@ -1,7 +1,8 @@
 import sqlalchemy
 
-from my_santander_finance.settings import settings
 from my_santander_finance.func_dir import create_dir
+from my_santander_finance.settings import settings
+
 
 def init_dir():
     create_dir(settings.DOWNLOAD_DIR)
@@ -10,12 +11,11 @@ def init_dir():
     create_dir(settings.CVS_TEMP_DIR)
 
 
-
 def init_sqlite():
     # conectar a la base de datos
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + settings.DATABASE_SQLITE
     database_connection = sqlalchemy.create_engine(SQLALCHEMY_DATABASE_URI, echo=False)
-    
+
     sql = """
             CREATE TABLE "debit" (
                 "fecha" DATE NULL,
@@ -30,14 +30,14 @@ def init_sqlite():
         )
         ;
         """
-    
+
     # print(sql)
     try:
         database_connection.execute(sql)
     except sqlalchemy.exc.SQLAlchemyError as ex:
         # Silently ignore errors if table and index already exist
         if str(ex).find('already exists') != -1:
-                pass
+            pass
         else:
             print('####')
             print('Error sqlite')
@@ -45,7 +45,7 @@ def init_sqlite():
             error = str(ex.__dict__['orig'])
             print(error)
             print('####')
-    
+
     sql = """
             CREATE UNIQUE INDEX `index_1` ON debit (`fecha`, `descripcion`,`cuenta_sueldo`);
           """
@@ -55,7 +55,7 @@ def init_sqlite():
     except sqlalchemy.exc.SQLAlchemyError as ex:
         # Silently ignore errors if table and index already exist
         if str(ex).find('already exists') != -1:
-                pass
+            pass
         else:
             print('####')
             print('Error sqlite')
@@ -64,7 +64,7 @@ def init_sqlite():
             print(error)
             print('####')
 
-if __name__ == "__main__":
-   init_dir()
-   init_sqlite()
 
+if __name__ == "__main__":
+    init_dir()
+    init_sqlite()

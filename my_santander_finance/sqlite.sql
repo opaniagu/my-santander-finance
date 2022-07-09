@@ -11,4 +11,3 @@ CREATE TABLE "debit" (
 );
 
 CREATE UNIQUE INDEX `index_1` ON debit (`fecha`, `descripcion`,`cuenta_sueldo`);
-

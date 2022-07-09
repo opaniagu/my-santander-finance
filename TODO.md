@@ -10,8 +10,11 @@
 
 ### In Progress
 
+
 ### Done ✓
 
 - [x] Realizar validaciones de que existan las variables de entorno o el archivo .env con los datos necesarios para el login en la web de Santander
 
 - [x] Renombrar los archivos que se mueven a download\debit.old con esta mascara: debit_yyyy-mm-dd_hh#mm#ss.xls
+
+- [x] Agregar soporte a lint ( flake8, isort, black, pre-commit )
