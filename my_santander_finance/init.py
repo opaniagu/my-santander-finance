@@ -7,7 +7,10 @@ import sqlalchemy
 
 from my_santander_finance.chrome_version import get_chrome_version
 from my_santander_finance.func_dir import create_dir
+from my_santander_finance.logger import Logger
 from my_santander_finance.settings import settings
+
+log = Logger().get_logger(__name__)
 
 
 def init_dir():

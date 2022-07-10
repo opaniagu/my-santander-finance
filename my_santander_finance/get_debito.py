@@ -11,7 +11,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from my_santander_finance.func_files import tiny_file_rename
+from my_santander_finance.logger import Logger
 from my_santander_finance.settings import settings
+
+log = Logger().get_logger(__name__)
 
 
 def close_session(driver):

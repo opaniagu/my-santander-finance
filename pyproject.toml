@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "my-santander-finance"
-version = "0.2.5"
+version = "0.2.6"
 description = "automated process to obtain the consumption of the bank credit and debit cards, classify them and generate a dashboard"
 authors = ["Oscar Paniagua <opaniagu@gmail.com>"]
 license = "MIT"
@@ -49,7 +49,7 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-sanfi = "my_santander_finance.app:main"
+sanfi = "my_santander_finance.sanfi:main"
 
 [tool.black]
 line-length = 120

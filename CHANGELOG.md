@@ -2,10 +2,18 @@
 
 ## [Unreleased]
 
+## [0.2.6] - 2022-07-10
+### Added
+- Changed 'app.py' to 'sanfi.py'
+- Fixed minor bugs in sanfi.py
+- Add log
+- Add debug mode
+- Add some docs/es files
+
+
 ## [0.2.5] - 2022-07-09
 ### Added
 - Add support automatic download chromedriver on windows (version 103 and 104)
-
 
 ## [0.2.4] - 2022-07-09
 ### Added

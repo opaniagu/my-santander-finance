@@ -11,17 +11,20 @@ import pandas as pd
 
 from my_santander_finance.func_dir import get_list_files
 from my_santander_finance.func_excel import find_row_from_card, find_rows
+from my_santander_finance.logger import Logger
 from my_santander_finance.settings import settings
+
+log = Logger().get_logger(__name__)
 
 
 def xls_to_csv(src_dir: str, src_ext: str, dst_dir: str, dst_ext: str):
     # obtengo la lista de arhivos (previamente descargados) a procesar
     files = get_list_files(dir=src_dir, ext=src_ext)
-    print(f"Se econtraron {len(files)} archivos posibles para importar")
+    log.debug(f"Se econtraron {len(files)} archivos {src_ext} posibles para importar")
 
     # si la lista esta vacia finalizo con mensaje
     if len(files) == 0:
-        print(f"Ningun archivo {src_ext} pendiente de procesar")
+        log.debug(f"Ningun archivo {src_ext} pendiente de procesar")
         return
 
     # proceso cada archivo de la lista
@@ -87,7 +90,7 @@ def xls_to_csv(src_dir: str, src_ext: str, dst_dir: str, dst_ext: str):
         try:
             shutil.move(src_path, dst_path)
         except FileNotFoundError:
-            print(f"File Not Found {src_path}")
+            log.debug(f"File Not Found {src_path}")
         except Exception as ex:
             print(ex)
 
@@ -146,11 +149,11 @@ def csv_to_sqlite(cvs_filepath: str, sqlite_filepath: str):
 def import_csv_to_sqlite():
     # obtengo la lista de arhivos previamente descargados y transformados (xls->csv)
     files = get_list_files(dir=settings.CVS_TEMP_DIR, ext=".csv")
-    print(f"Se econtraron {len(files)} archivos posibles para importar")
+    log.debug(f"Se econtraron {len(files)} archivos .csv posibles para importar")
 
     # si la lista esta vacia finalizo con mensaje
     if len(files) == 0:
-        print("Ningun archivo .csv pendiente de procesar")
+        log.debug("Ningun archivo .csv pendiente de procesar")
         exit()
 
     # proceso cada archivo de la lista
