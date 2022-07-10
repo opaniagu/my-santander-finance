@@ -15,6 +15,20 @@ Instalar utilizando pip
   pip install my-santander-finance
 ```
 
+## Actualizacion
+
+Actualizar utilizando pip
+
+```bash
+  pip install --upgrade my-santander-finance
+```
+
+Luego verificar version
+```bash
+  sanfi --version
+```
+
+
 ## Configuracion
 
 La aplicacion crea un directorio en el 'home' del usuario con el nombre '.sanfi', por ejemplo en Windows seria en:

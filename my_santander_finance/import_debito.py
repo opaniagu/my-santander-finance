@@ -142,6 +142,7 @@ def csv_to_sqlite(cvs_filepath: str, sqlite_filepath: str):
             skip = skip + 1
 
     conn.commit()
+    conn.close()
 
     log.debug(f"Se proceso {cvs_filepath} , se agregaron {count} registros, y se omitieron {skip} registros.")
 
@@ -161,6 +162,7 @@ def import_csv_to_sqlite():
         # creo el path absoluto del archivo .csv a procesar
         src_file = settings.CVS_TEMP_DIR + "\\" + f
         sqlite_filepath = os.path.join(settings.LOCAL_DIR, settings.DATABASE_SQLITE)
+        log.debug(f"sqlite absolute path to connect: {sqlite_filepath}")
         csv_to_sqlite(cvs_filepath=src_file, sqlite_filepath=sqlite_filepath)
 
         if os.path.exists(src_file):

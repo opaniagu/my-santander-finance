@@ -25,6 +25,7 @@ def init_dir():
 def init_sqlite():
     # conectar a la base de datos
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(settings.LOCAL_DIR, settings.DATABASE_SQLITE)
+    log.debug(f"sqlite uri '{SQLALCHEMY_DATABASE_URI}'")
     database_connection = sqlalchemy.create_engine(SQLALCHEMY_DATABASE_URI, echo=False)
 
     sql = """
@@ -48,14 +49,15 @@ def init_sqlite():
     except sqlalchemy.exc.SQLAlchemyError as ex:
         # Silently ignore errors if table and index already exist
         if str(ex).find("already exists") != -1:
-            pass
+            log.debug("create table skiped...already exist")
         else:
-            print("####")
-            print("Error sqlite")
-            print(ex)
+            # print("####")
+            # print("Error sqlite")
+            # print(ex)
             error = str(ex.__dict__["orig"])
-            print(error)
-            print("####")
+            # print(error)
+            # print("####")
+            log.debug(error)
 
     sql = """
             CREATE UNIQUE INDEX `index_1` ON debit (`fecha`, `descripcion`,`cuenta_sueldo`);
@@ -66,14 +68,15 @@ def init_sqlite():
     except sqlalchemy.exc.SQLAlchemyError as ex:
         # Silently ignore errors if table and index already exist
         if str(ex).find("already exists") != -1:
-            pass
+            log.debug("create table index skiped...already exist")
         else:
-            print("####")
-            print("Error sqlite")
-            print(ex)
+            # print("####")
+            # print("Error sqlite")
+            # print(ex)
             error = str(ex.__dict__["orig"])
-            print(error)
-            print("####")
+            # print(error)
+            # print("####")
+            log.debug(error)
 
 
 def create_env_example():
