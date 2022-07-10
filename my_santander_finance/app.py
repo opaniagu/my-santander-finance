@@ -24,7 +24,7 @@ def main(download):
 
     if download is False:
         print("#################################################################################")  # noqa: E501
-        print("Si desea realizar un un download de consumo de la cuenta, incluye -d o --download")  # noqa: E501
+        print("Si desea realizar un download de consumo de la cuenta, incluya -d o --download")  # noqa: E501
         print("#################################################################################")  # noqa: E501
         print("\n")
 

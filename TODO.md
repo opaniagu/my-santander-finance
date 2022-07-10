@@ -4,13 +4,15 @@
 
 - [ ] Agregar soporte de log (loguru)
 - [ ] Agregar modo "debug" (log)
-- [ ] En el caso de no encontrar el driver chromedriver.exe, consultar si quiere realizar el download
 - [ ] Mejorar la documentacion
-- [ ] Agregar compatibilidad con linux
+- [ ] Agregar compatibilidad con linux, en general
+- [ ] Agregar compatibilidad con linux en chromedriver_download()
 - [ ] Agregar que los archivos y directorios del "usuario" se guarden en el home del usuario (en linux)
-- [ ] Agregar tests
+- [ ] Agregar tests (pytest)
+- [ ] Agregar consumos de visa y amex
 
 ### In Progress
+
 
 ### Done ✓
 
@@ -29,3 +31,4 @@
         [tool.poetry.scripts]
         sanfi = "my_santander_finance.app:main"
         ```
+- [x] En el caso de no encontrar el driver chromedriver.exe, realizar el download (soporte version 103 y 104 Windows)
