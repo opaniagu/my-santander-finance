@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "my-santander-finance"
-version = "0.2.6"
+version = "0.2.7"
 description = "automated process to obtain the consumption of the bank credit and debit cards, classify them and generate a dashboard"
 authors = ["Oscar Paniagua <opaniagu@gmail.com>"]
 license = "MIT"

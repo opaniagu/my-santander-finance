@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.2.7] - 2022-07-10
+### Added
+- Add crontab documentation
+- Add argument --version
+- Fixed on import_debit.py sqlite file path.
+
 ## [0.2.6] - 2022-07-10
 ### Added
 - Changed 'app.py' to 'sanfi.py'

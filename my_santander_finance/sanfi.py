@@ -1,8 +1,10 @@
 import logging
+import sys
 
 import click
 from selenium import webdriver
 
+from my_santander_finance.__init__ import __version__
 from my_santander_finance.get_debito import (
     close_session,
     configure_driver,
@@ -25,7 +27,18 @@ log = Logger().get_logger(__name__)
 logging.root.setLevel(logging.INFO)
 
 
+def show_version():
+    # log.info(f"sanfi version {__version__}")
+    print(__version__)
+
+
 @click.command()
+@click.option(
+    "--version",
+    default=False,
+    is_flag=True,
+    help="Show version",
+)
 @click.option(
     "--debug",
     default=False,
@@ -39,7 +52,11 @@ logging.root.setLevel(logging.INFO)
     is_flag=True,
     help="Download el reporte de consumo de la cuenta",
 )
-def main(debug, download):
+def main(version, debug, download):
+
+    if version is True:
+        show_version()
+        sys.exit()
 
     # Now I'm going to set debug mode to be true - Function that changes root level logging.
     # This could be from anything.

@@ -2,7 +2,6 @@
 
 ### Todo
 
-* [ ] Ejecutar desde el crontab de Windows
 * [ ] Guardar las variables de entorno como 'secrets'
 * [ ] Publicar en netlify
 * [ ] Agregar tests (pytest)
@@ -40,3 +39,7 @@
 * [x] Agregar soporte de log
 
 * [x] Agregar modo "debug" (log)
+
+* [x] Ejecutar desde el crontab de Windows
+  
+* [x] Agregar argumento --version, para mostrar la version de la app

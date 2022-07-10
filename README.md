@@ -59,6 +59,9 @@ sqlite3 --help
 ```
 Para mas informacion, click en [sqlite3](docs/es/sqlite3.md)
 
+## Crontab
+
+Para mas informacion, click en [crontab](docs/es/crontab.md)
 
 ## Feedback
 
