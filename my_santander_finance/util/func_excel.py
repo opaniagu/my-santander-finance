@@ -2,7 +2,7 @@ def find_row_from_card(card_text, df):
     """
     busca el encabezado del nombre de la tarjeta
     a partir del cual comienzan los consumos
-    ej.  'Tarjeta VISA  XXXX-3770'
+    ej.  'Tarjeta VISA  XXXX-YYYY'
     """
     fila = 0
 
@@ -31,7 +31,7 @@ def find_rows(fila, df):
     i = 0
     for row in range(fila + 1, df.shape[0]):
         # print("'" + str(df.iat[row,1]) + "'", type(df.iat[row,1]))
-        if str(df.iat[row, 1]) == 'nan':
+        if str(df.iat[row, 1]) == "nan":
             # print("found nan")
             break
         else:
@@ -39,3 +39,34 @@ def find_rows(fila, df):
     # print(i)
 
     return i
+
+
+def find_row_from_card_partial(card_text, df, start=0):
+    """
+    busca el encabezado del nombre de la tarjeta
+    a partir del cual comienzan los consumos
+    ej.  'Tarjeta VISA  XXXX'
+    return:
+        row, text of row
+        example: 8, Tarjeta VISA  XXXX-YYYY
+    """
+    fila = 0
+    txt = ""
+
+    # shape es una tuple de cantidad de filas y columnas
+    for row in range(start, df.shape[0]):
+        for col in range(df.shape[1]):
+            # print(row, col, df.iat[row,col])
+            # if df.iat[row, col] == card_text:
+            if isinstance(df.iat[row, col], str):
+                if df.iat[row, col].startswith(card_text):
+                    # row_start = row
+                    # print(row,col)
+                    fila = row + 1
+                    txt = df.iat[row, col]
+                    break
+        else:
+            continue  # only executed if the inner loop did NOT break
+        break  # only executed if the inner loop DID break
+
+    return fila, txt

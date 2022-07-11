@@ -1,16 +1,17 @@
 import os
 from os import listdir
 
+from my_santander_finance.config.settings import settings
 from my_santander_finance.logger import Logger
-from my_santander_finance.settings import settings
 
 log = Logger().get_logger(__name__)
 
 
-def get_list_files(dir: str, ext: str):
+def get_list_files(dir: str, ext: str, prefix: str = "debit"):
+    """devuelve una lista con los archivos que empiezan con 'prefix'"""
     lst = []
     for file in listdir(dir):
-        if file.endswith(ext):
+        if file.startswith(prefix) and file.endswith(ext):
             lst.append(file)
     return lst
 

@@ -2,14 +2,13 @@
 
 ### Todo
 
-* [ ] Guardar las variables de entorno como 'secrets'
-* [ ] Publicar en netlify
+* [ ] Refactor csv_to_sqlite() para que utilice sqlalchemy (en vez de sqlite3 lib)
 * [ ] Agregar tests (pytest)
-* [ ] Agregar consumos de visa y amex
 * [ ] Linux: Agregar compatibilidad con linux, en general
 * [ ] Linux: Agregar compatibilidad con linux en chromedriver_download()
 * [ ] Linux: Agregar que los archivos y directorios del "usuario" se guarden en el home del usuario (en linux)
-
+* [ ] Agregar consumos de amex
+* [ ] Publicar en netlify (sin el modulo de webscraping, para no comprometer las contraseñas)
 
 ### In Progress
 
@@ -43,3 +42,5 @@
 * [x] Ejecutar desde el crontab de Windows
   
 * [x] Agregar argumento --version, para mostrar la version de la app
+
+* [x] Agregar consumos de visa

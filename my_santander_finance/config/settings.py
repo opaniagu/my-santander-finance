@@ -49,8 +49,13 @@ class Settings(BaseSettings):
     LOCAL_DIR = GLOBAL_LOCAL_DIR
     SANTANDER_LOGIN_URL = "https://www2.personas.santander.com.ar/obp-webapp/angular/#!/login"
     DOWNLOAD_DIR = join(LOCAL_DIR, "download\\")
-    DOWNLOAD_CUENTA_DIR = DOWNLOAD_DIR + "debit"
     CVS_TEMP_DIR = join(LOCAL_DIR, "temp")
+
+    # debito
+    DOWNLOAD_CUENTA_DIR = DOWNLOAD_DIR + "debit"
+
+    # visa
+    DOWNLOAD_VISA_DIR = DOWNLOAD_DIR + "visa"
 
     # chromedriver
     CHROME_DRIVER_DIR = join(LOCAL_DIR, "driver")

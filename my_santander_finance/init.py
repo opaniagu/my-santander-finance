@@ -5,10 +5,10 @@ from os.path import join
 import requests
 import sqlalchemy
 
-from my_santander_finance.chrome_version import get_chrome_version
-from my_santander_finance.func_dir import create_dir
+from my_santander_finance.config.settings import settings
 from my_santander_finance.logger import Logger
-from my_santander_finance.settings import settings
+from my_santander_finance.util.func_chrome import get_chrome_version
+from my_santander_finance.util.func_dir import create_dir
 
 log = Logger().get_logger(__name__)
 
@@ -16,18 +16,38 @@ log = Logger().get_logger(__name__)
 def init_dir():
     create_dir(settings.LOCAL_DIR)
     create_dir(settings.DOWNLOAD_DIR)
-    create_dir(settings.DOWNLOAD_CUENTA_DIR)
-    create_dir(settings.DOWNLOAD_CUENTA_DIR + ".old")
     create_dir(settings.CVS_TEMP_DIR)
     create_dir(join(settings.LOCAL_DIR, "driver"))
 
+    # debit
+    create_dir(settings.DOWNLOAD_CUENTA_DIR)
+    create_dir(settings.DOWNLOAD_CUENTA_DIR + ".old")
 
-def init_sqlite():
+    # visa
+    create_dir(settings.DOWNLOAD_VISA_DIR)
+    create_dir(settings.DOWNLOAD_VISA_DIR + ".old")
+
+
+def sqlite_exec_sql(sql: str):
     # conectar a la base de datos
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(settings.LOCAL_DIR, settings.DATABASE_SQLITE)
     log.debug(f"sqlite uri '{SQLALCHEMY_DATABASE_URI}'")
     database_connection = sqlalchemy.create_engine(SQLALCHEMY_DATABASE_URI, echo=False)
 
+    # ejecutar la consulta sql
+    try:
+        database_connection.execute(sql)
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        # Silently ignore errors if table and index already exist
+        if str(ex).find("already exists") != -1:
+            log.debug("sql skiped...resource already exist")
+        else:
+            error = str(ex.__dict__["orig"])
+            log.debug(error)
+
+
+def init_sqlite():
+    # debito
     sql = """
             CREATE TABLE "debit" (
                 "fecha" DATE NULL,
@@ -42,41 +62,33 @@ def init_sqlite():
         )
         ;
         """
-
-    # print(sql)
-    try:
-        database_connection.execute(sql)
-    except sqlalchemy.exc.SQLAlchemyError as ex:
-        # Silently ignore errors if table and index already exist
-        if str(ex).find("already exists") != -1:
-            log.debug("create table skiped...already exist")
-        else:
-            # print("####")
-            # print("Error sqlite")
-            # print(ex)
-            error = str(ex.__dict__["orig"])
-            # print(error)
-            # print("####")
-            log.debug(error)
+    sqlite_exec_sql(sql)
 
     sql = """
             CREATE UNIQUE INDEX `index_1` ON debit (`fecha`, `descripcion`,`cuenta_sueldo`);
           """
+    sqlite_exec_sql(sql)
 
-    try:
-        database_connection.execute(sql)
-    except sqlalchemy.exc.SQLAlchemyError as ex:
-        # Silently ignore errors if table and index already exist
-        if str(ex).find("already exists") != -1:
-            log.debug("create table index skiped...already exist")
-        else:
-            # print("####")
-            # print("Error sqlite")
-            # print(ex)
-            error = str(ex.__dict__["orig"])
-            # print(error)
-            # print("####")
-            log.debug(error)
+    # visa
+    sql = """
+            CREATE TABLE "visa" (
+                "fecha" DATE NULL,
+                "descripcion" TEXT NULL,
+                "establecimiento" TEXT NULL,
+                "comprobante" TEXT NULL,
+                "importe_pesos" REAL DEFAULT 0.0,
+                "importe_dolares" REAL DEFAULT 0.0,
+                "tarjeta" TEXT NULL,
+                "categoria" TEXT NULL
+        )
+        ;
+        """
+    sqlite_exec_sql(sql)
+
+    sql = """
+            CREATE UNIQUE INDEX `index_2` ON visa (`fecha`, `descripcion`,`comprobante`);
+          """
+    sqlite_exec_sql(sql)
 
 
 def create_env_example():
