@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2022-07-11
+### Added
+- Add visa credit card web scraping
+- Refactor source code
+
 ## [0.2.7] - 2022-07-10
 ### Added
 - Add crontab documentation

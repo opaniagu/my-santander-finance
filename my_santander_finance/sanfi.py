@@ -2,16 +2,8 @@ import logging
 import sys
 
 import click
-from selenium import webdriver
 
 from my_santander_finance.__init__ import __version__
-from my_santander_finance.get_debito import (
-    close_session,
-    configure_driver,
-    download_debit,
-    login,
-)
-from my_santander_finance.import_debito import import_csv_to_sqlite, xls_to_csv
 from my_santander_finance.init import (
     create_env_example,
     download_chromedriver,
@@ -19,7 +11,8 @@ from my_santander_finance.init import (
     init_sqlite,
 )
 from my_santander_finance.logger import Logger
-from my_santander_finance.settings import settings
+from my_santander_finance.web_scraping.get_debito import get_debito
+from my_santander_finance.web_scraping.get_visa import get_visa
 
 # Starts logger for file
 log = Logger().get_logger(__name__)
@@ -46,13 +39,24 @@ def show_version():
     help="Activate debug mode",
 )
 @click.option(
-    "--download",
-    "-d",
+    "--debit",
     default=False,
     is_flag=True,
-    help="Download el reporte de consumo de la cuenta",
+    help="Procesa el reporte de consumo de la cuenta unica(debito)",
 )
-def main(version, debug, download):
+@click.option(
+    "--visa",
+    default=False,
+    is_flag=True,
+    help="Procesa el reporte de consumo de la tarjeta Visa",
+)
+@click.option(
+    "--download",
+    default=False,
+    is_flag=True,
+    help="Download el reporte de la cuenta o tarjeta de credito del banco",
+)
+def main(version, debug, debit, visa, download):
 
     if version is True:
         show_version()
@@ -64,12 +68,11 @@ def main(version, debug, download):
     if debug is True:
         Logger().set_debug_mode(True)
 
-    if download is False:
-        # print("#################################################################################")  # noqa: E501
-        # print("Si desea realizar un download de consumo de la cuenta, incluya -d o --download")  # noqa: E501
-        # print("#################################################################################")  # noqa: E501
-        # print("\n")
-        log.debug("Add -d or --download to get consumption")
+    if debit is False:
+        log.debug("Add --debit to get consumption of your account")
+
+    if visa is False:
+        log.debug("Add --visa to get consumption of your Visa credit card")
 
     # creo directorios y tablas en la base de datos
     init_dir()
@@ -78,21 +81,12 @@ def main(version, debug, download):
     download_chromedriver()
 
     # download el reporte de la tarjeta de debito
-    if download:
-        options, service = configure_driver()
-        driver = webdriver.Chrome(service=service, options=options)
-        login(driver=driver)
-        download_debit(driver)
-        close_session(driver=driver)
+    if debit:
+        get_debito(download)
 
-    # to sqlite
-    xls_to_csv(
-        src_dir=settings.DOWNLOAD_CUENTA_DIR,
-        src_ext=".xls",
-        dst_dir=settings.CVS_TEMP_DIR,
-        dst_ext=".csv",
-    )
-    import_csv_to_sqlite()
+    # download el reporte de la tarjeta de credito Visa
+    if visa:
+        get_visa(download)
 
 
 # -----------------------------------------

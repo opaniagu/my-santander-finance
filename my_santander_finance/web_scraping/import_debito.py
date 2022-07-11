@@ -9,10 +9,14 @@ import sqlite3
 
 import pandas as pd
 
-from my_santander_finance.func_dir import get_list_files
-from my_santander_finance.func_excel import find_row_from_card, find_rows
+from my_santander_finance.config.settings import settings
 from my_santander_finance.logger import Logger
-from my_santander_finance.settings import settings
+from my_santander_finance.util.func_dir import get_list_files
+from my_santander_finance.util.func_excel import (
+    find_row_from_card,
+    find_row_from_card_partial,
+    find_rows,
+)
 
 log = Logger().get_logger(__name__)
 
@@ -34,6 +38,11 @@ def xls_to_csv(src_dir: str, src_ext: str, dst_dir: str, dst_ext: str):
 
         # genero el pandas dataframe
         df1 = pd.read_excel(src_file)
+
+        # busco el numero de cuenta
+        str_to_find = "Cuenta única"
+        pos, cuenta = find_row_from_card_partial(str_to_find, df1)
+        log.debug(cuenta)
 
         # busco el str para saber donde empieza la tabla
         str_to_find = "Últimos movimientos"
@@ -64,7 +73,7 @@ def xls_to_csv(src_dir: str, src_ext: str, dst_dir: str, dst_ext: str):
         # agrego una columna tarjeta(card), y una columna categoria, con valores por default
         # luego, otro procesamiento, realizara los tags dentro de 'categoria' en funcion del
         # campo descripcion
-        df1["tarjeta"] = "cuenta_unica"
+        df1["tarjeta"] = cuenta[13:]
         df1["categoria"] = "unknown"
 
         # convierto la columna Fecha que esta en str a date con el formato correcto
@@ -155,7 +164,7 @@ def import_csv_to_sqlite():
     # si la lista esta vacia finalizo con mensaje
     if len(files) == 0:
         log.debug("Ningun archivo .csv pendiente de procesar")
-        exit()
+        return
 
     # proceso cada archivo de la lista
     for f in files:

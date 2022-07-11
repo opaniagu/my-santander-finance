@@ -5,7 +5,7 @@ import os
 import time
 from datetime import datetime
 
-from my_santander_finance.settings import settings
+from my_santander_finance.config.settings import settings
 
 
 def tiny_file_rename(newname, folder_of_download, time_to_wait=60):
