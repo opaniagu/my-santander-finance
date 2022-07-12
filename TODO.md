@@ -2,6 +2,9 @@
 
 ### Todo
 
+* [ ] config/settings.py: variables de entorno con prefix 'SANFI_', de esta manera, aseguramos que no colisione con otra app.
+* [ ] clasificar y etiquetar los consumos
+* [ ] generar reportes
 * [ ] Refactor csv_to_sqlite() para que utilice sqlalchemy (en vez de sqlite3 lib)
 * [ ] Agregar tests (pytest)
 * [ ] Linux: Agregar compatibilidad con linux, en general

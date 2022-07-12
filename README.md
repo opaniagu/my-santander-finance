@@ -9,7 +9,9 @@ Aplicacion para la gestion de cuentas del banco Santander de Argentina, permite:
 
 ## Instalacion
 
-Instalar utilizando pip
+_se requiere tener instalado python_
+
+Instalar utilizando pip, desde la consola(cmd.exe):
 
 ```bash
   pip install my-santander-finance
@@ -35,7 +37,9 @@ La aplicacion crea un directorio en el 'home' del usuario con el nombre '.sanfi'
 
 c:\Users\Oscar\.sanfi\
 
-Para poder realizar el web scrapping de la pagina de Santander Argentina, es necesario definir tres(3) variables de entorno, ya sea como variables de entorno propiamente dichas o bien en un archivo en el raiz del directorio de la app llamado .env
+Para poder realizar el web scrapping de la pagina de Santander Argentina, es necesario definir tres(3) variables de entorno, ya sea como variables de entorno propiamente dichas o bien en un archivo en el raiz del directorio de la app llamado .env, por ejemplo:
+
+c:\Users\Oscar\.sanfi\.env
 
 ### Environment Variables
 
@@ -60,7 +64,7 @@ sanfi --help
 
 En el caso de querer realizar el download de los consumos:
 ```bash
-sanfi -d
+sanfi --download
 ```
 La informacion se guarda en una base de datos sqlite (santander.sqlite). Se puede consultar el formato de las tablas en [sqlite](my_santander_finance/sqlite.sql)
 
