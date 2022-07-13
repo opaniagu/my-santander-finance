@@ -1,5 +1,4 @@
 # App para Automatizacion (web scrapping) de Banco Santander
-
 Aplicacion para la gestion de cuentas del banco Santander de Argentina, permite:
 
 * [x] obtener el resumen de la cuenta(download) de los ultimos 60 dias
