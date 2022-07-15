@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [0.3.1] - 2022-07-15
+### Added
+- Fixed typo on import_debito.py
+
+
 ## [0.3.0] - 2022-07-11
 ### Added
 - Add visa credit card web scraping

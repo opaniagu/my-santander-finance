@@ -2,9 +2,10 @@
 
 ### Todo
 
+* [ ] si no se utiliza el argumento --download que no sea requerido DNI, CLAVE, USUARIO EN .env
 * [ ] config/settings.py: variables de entorno con prefix 'SANFI_', de esta manera, aseguramos que no colisione con otra app.
-* [ ] clasificar y etiquetar los consumos
-* [ ] generar reportes
+* [ ] clasificar y etiquetar los consumos utilizando ML
+* [ ] generar reportes (dashboards)
 * [ ] Refactor csv_to_sqlite() para que utilice sqlalchemy (en vez de sqlite3 lib)
 * [ ] Agregar tests (pytest)
 * [ ] Linux: Agregar compatibilidad con linux, en general
