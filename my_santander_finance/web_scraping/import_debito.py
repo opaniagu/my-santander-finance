@@ -23,6 +23,9 @@ log = Logger().get_logger(__name__)
 
 def xls_to_csv(src_dir: str, src_ext: str, dst_dir: str, dst_ext: str):
     # obtengo la lista de arhivos (previamente descargados) a procesar
+    log.debug(f"source dir: {src_dir}")
+    log.debug(f"source ext: {src_ext}")
+
     files = get_list_files(dir=src_dir, ext=src_ext)
     log.debug(f"Se econtraron {len(files)} archivos {src_ext} posibles para importar")
 
@@ -35,6 +38,8 @@ def xls_to_csv(src_dir: str, src_ext: str, dst_dir: str, dst_ext: str):
     for f in files:
         # creo el path absoluto del archivo .xls a procesar
         src_file = src_dir + "\\" + f
+
+        log.debug(f"processing file: {src_file}")
 
         # genero el pandas dataframe
         df1 = pd.read_excel(src_file)
@@ -57,15 +62,26 @@ def xls_to_csv(src_dir: str, src_ext: str, dst_dir: str, dst_ext: str):
         # seteo el nombre de las columnas, en un momento santander las cambió,
         # con lo cual es mejor dejarlo fijo
         # si cambia, manualmente tambien hay que modificar la definicion de la tabla sqlite
-        df1.columns = [
-            "fecha",
-            "sucursal_origen",
-            "descripcion",
-            "referencia",
-            "cuenta_sueldo",
-            "importe_cuenta_corriente_pesos",
-            "saldo_pesos",
-        ]
+
+        qc = len(df1.columns)
+        log.debug(f"quantity of columns: {qc}")
+
+        if qc == 5:
+            df1.columns = ["fecha", "sucursal_origen", "descripcion", "referencia", "cuenta_sueldo"]
+            # add cols
+            df1["importe_cuenta_corriente_pesos"] = 0
+            df1["saldo_pesos"] = 0
+
+        else:
+            df1.columns = [
+                "fecha",
+                "sucursal_origen",
+                "descripcion",
+                "referencia",
+                "cuenta_sueldo",
+                "importe_cuenta_corriente_pesos",
+                "saldo_pesos",
+            ]
 
         # elimino espacios adelante y atras en los headers, si existieran
         df1.columns = df1.columns.str.strip()
@@ -80,12 +96,14 @@ def xls_to_csv(src_dir: str, src_ext: str, dst_dir: str, dst_ext: str):
         df1["fecha"] = df1["fecha"].apply(lambda x: datetime.datetime.strptime(x, "%d/%m/%Y").date())
 
         # convierto la columna 'Cuenta sueldo' de str a double
-        df1["cuenta_sueldo"] = df1["cuenta_sueldo"].apply(lambda x: (x.replace(".", "")))
-        df1["cuenta_sueldo"] = df1["cuenta_sueldo"].apply(lambda x: float(x.replace(",", ".")))
+        if isinstance(df1["cuenta_sueldo"], str) is True:
+            df1["cuenta_sueldo"] = df1["cuenta_sueldo"].apply(lambda x: (x.replace(".", "")))
+            df1["cuenta_sueldo"] = df1["cuenta_sueldo"].apply(lambda x: float(x.replace(",", ".")))
 
         # convierto la columna 'Saldo pesos' de str a double
-        df1["saldo_pesos"] = df1["saldo_pesos"].str.replace(".", "", regex=True)
-        df1["saldo_pesos"] = df1["saldo_pesos"].str.replace(",", ".", regex=True)
+        if isinstance(df1["saldo_pesos"], str) is True:
+            df1["saldo_pesos"] = df1["saldo_pesos"].str.replace(".", "", regex=True)
+            df1["saldo_pesos"] = df1["saldo_pesos"].str.replace(",", ".", regex=True)
 
         # guardo el archivo transformado
         index = f.index(".")
