@@ -144,6 +144,7 @@ def csv_to_sqlite(cvs_filepath: str, sqlite_filepath: str):
             continue
 
         # el campo 'fecha' lo convierto a 'yyyy-mm-dd' para mysql
+        # aseguro el formato
         row[0] = datetime.strptime(row[0], "%d/%m/%Y")
         row[0] = row[0].strftime("%Y-%m-%d")
 
