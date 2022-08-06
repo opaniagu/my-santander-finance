@@ -1,0 +1,25 @@
+site_name: Personal Finance
+site_url: https://fastapi.tiangolo.com/
+theme:
+  name: material
+  language: en
+  logo: img/icon-white.svg
+  favicon: img/favicon.png
+nav:
+- FastAPI: index.md
+- Languages:
+  - en: /
+  - es: /es/
+- contributing.md
+extra:
+  alternate:
+  - link: /
+    name: English
+  - link: /es/
+    name: Spanish
+extra_css:
+- css/termynal.css
+- css/custom.css
+extra_javascript:
+- js/termynal.js
+- js/custom.js

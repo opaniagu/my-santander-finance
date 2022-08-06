@@ -5,6 +5,7 @@ import csv
 import os
 import shutil
 import sqlite3
+from datetime import datetime
 
 import pandas as pd
 
@@ -141,6 +142,10 @@ def csv_to_sqlite(cvs_filepath: str, sqlite_filepath: str):
         if first == 1:
             first = 0
             continue
+
+        # el campo 'fecha' lo convierto a 'yyyy-mm-dd' para mysql
+        row[0] = datetime.strptime(row[0], "%d/%m/%Y")
+        row[0] = row[0].strftime("%Y-%m-%d")
 
         # para los campos "real" (float), el valor por default 0.0
         # si es NULL o vacio

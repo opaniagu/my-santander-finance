@@ -2,6 +2,8 @@
 
 ### Todo
 
+* [ ] add mkdocs-material
+* [ ] log adicional en un archivo .log. de manera de poder ver los resultados de las tareas programadas en el crontab
 * [ ] si no se utiliza el argumento --download que no sea requerido DNI, CLAVE, USUARIO EN .env
 * [ ] config/settings.py: variables de entorno con prefix 'SANFI_', de esta manera, aseguramos que no colisione con otra app.
 * [ ] clasificar y etiquetar los consumos utilizando ML
