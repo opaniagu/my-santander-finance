@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.3.4] - 2023-02-02
+### Updated
+- Updated chromedriver to release 109
+
 ## [0.3.1] - 2022-07-15
 ### Added
 - Fixed typo on import_debito.py

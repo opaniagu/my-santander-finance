@@ -36,14 +36,18 @@ def sqlite_exec_sql(sql: str):
 
     # ejecutar la consulta sql
     try:
-        database_connection.execute(sql)
+        conn = database_connection.connect()
+        conn.execute(sql)
+        # database_connection.execute(sql)
+
     except sqlalchemy.exc.SQLAlchemyError as ex:
         # Silently ignore errors if table and index already exist
         if str(ex).find("already exists") != -1:
             log.debug("sql skiped...resource already exist")
         else:
-            error = str(ex.__dict__["orig"])
-            log.debug(error)
+            # error = str(ex.__dict__["orig"])
+            # log.debug(error)
+            log.debug(ex)
 
 
 def init_sqlite():
