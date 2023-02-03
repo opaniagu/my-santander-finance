@@ -57,6 +57,9 @@ class Settings(BaseSettings):
     # visa
     DOWNLOAD_VISA_DIR = DOWNLOAD_DIR + "visa"
 
+    # amex
+    DOWNLOAD_AMEX_DIR = DOWNLOAD_DIR + "amex"
+
     # chromedriver
     CHROME_DRIVER_DIR = join(LOCAL_DIR, "driver")
     CHROME_DRIVER_EXE = join(LOCAL_DIR, "driver\\chromedriver.exe")

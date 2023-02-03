@@ -11,6 +11,7 @@ from my_santander_finance.init import (
     init_sqlite,
 )
 from my_santander_finance.logger import Logger
+from my_santander_finance.web_scraping.get_amex import get_amex
 from my_santander_finance.web_scraping.get_debito import get_debito
 from my_santander_finance.web_scraping.get_visa import get_visa
 
@@ -51,12 +52,18 @@ def show_version():
     help="Procesa el reporte de consumo de la tarjeta Visa",
 )
 @click.option(
+    "--amex",
+    default=False,
+    is_flag=True,
+    help="Procesa el reporte de consumo de la tarjeta American Express",
+)
+@click.option(
     "--download",
     default=False,
     is_flag=True,
     help="Download el reporte de la cuenta o tarjeta de credito del banco",
 )
-def main(version, debug, debit, visa, download):
+def main(version, debug, debit, visa, amex, download):
 
     if version is True:
         show_version()
@@ -74,6 +81,9 @@ def main(version, debug, debit, visa, download):
     if visa is False:
         log.debug("Add --visa to get consumption of your Visa credit card")
 
+    if amex is False:
+        log.debug("Add --amex to get consumption of your American Express credit card")
+
     # creo directorios y tablas en la base de datos
     init_dir()
     create_env_example()
@@ -87,6 +97,10 @@ def main(version, debug, debit, visa, download):
     # download el reporte de la tarjeta de credito Visa
     if visa:
         get_visa(download)
+
+    # download el reporte de la tarjeta de credito American Express
+    if amex:
+        get_amex(download)
 
 
 # -----------------------------------------

@@ -27,6 +27,10 @@ def init_dir():
     create_dir(settings.DOWNLOAD_VISA_DIR)
     create_dir(settings.DOWNLOAD_VISA_DIR + ".old")
 
+    # amex
+    create_dir(settings.DOWNLOAD_AMEX_DIR)
+    create_dir(settings.DOWNLOAD_AMEX_DIR + ".old")
+
 
 def sqlite_exec_sql(sql: str):
     # conectar a la base de datos
@@ -94,6 +98,27 @@ def init_sqlite():
           """
     sqlite_exec_sql(sql)
 
+    # amex
+    sql = """
+            CREATE TABLE "amex" (
+                "fecha" DATE NULL,
+                "descripcion" TEXT NULL,
+                "establecimiento" TEXT NULL,
+                "comprobante" TEXT NULL,
+                "importe_pesos" REAL DEFAULT 0.0,
+                "importe_dolares" REAL DEFAULT 0.0,
+                "tarjeta" TEXT NULL,
+                "categoria" TEXT NULL
+        )
+        ;
+        """
+    sqlite_exec_sql(sql)
+
+    sql = """
+            CREATE UNIQUE INDEX `index_3` ON amex (`fecha`, `descripcion`,`comprobante`);
+          """
+    sqlite_exec_sql(sql)
+
 
 def create_env_example():
     env_file_path = join(settings.LOCAL_DIR, ".env.example")
@@ -112,6 +137,10 @@ def download_chromedriver():
             url = "https://chromedriver.storage.googleapis.com/103.0.5060.53/chromedriver_win32.zip"
         elif chrome_version == "104":
             url = "https://chromedriver.storage.googleapis.com/104.0.5112.29/chromedriver_win32.zip"
+        elif chrome_version == "109":
+            url = "https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_win32.zip"
+        elif chrome_version == "110":
+            url = "https://chromedriver.storage.googleapis.com/110.0.5481.30/chromedriver_win32.zip"
         else:
             print(f"Can not found chromedriver version {chrome_version}")
             return
