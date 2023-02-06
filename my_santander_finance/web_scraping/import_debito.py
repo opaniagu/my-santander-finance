@@ -127,6 +127,9 @@ def csv_to_sqlite(cvs_filepath: str, sqlite_filepath: str):
     # no continua mas y no hay manera de hacerlo
     # por eso descarto utilizar to_sql
 
+    # log.debug(f"{cvs_filepath}")
+    # exit()
+
     conn = sqlite3.connect(sqlite_filepath)
     curs = conn.cursor()
     # curs.execute("CREATE TABLE document (col1 TEXT, col2 TEXT, col3 TEXT, col4 TEXT,col5 TEXT);")
@@ -135,6 +138,9 @@ def csv_to_sqlite(cvs_filepath: str, sqlite_filepath: str):
     skip = 0
     first = 1
     for row in reader:
+
+        # print(row)
+
         if first == 1:
             first = 0
             continue
@@ -150,20 +156,42 @@ def csv_to_sqlite(cvs_filepath: str, sqlite_filepath: str):
         if len(row[6]) == 0:
             row[6] = 0.0
 
+        if isinstance(row[4], str):
+            sueldo = row[4].replace(".", "")
+            sueldo = sueldo.replace(",", ".")
+        else:
+            sueldo = row[4]
+
+        if isinstance(row[5], str):
+            corriente = row[5].replace(".", "")
+            corriente = corriente.replace(",", ".")
+        else:
+            corriente = row[5]
+
+        if isinstance(row[6], str):
+            saldo = row[6].replace(".", "")
+            saldo = saldo.replace(",", ".")
+        else:
+            saldo = row[6]
+
         to_db = [
             row[0].encode("utf-8"),
             row[1].encode("utf-8"),
             row[2].encode("utf-8"),
             row[3].encode("utf-8"),
-            row[4],
-            row[5],
-            row[6],
+            sueldo,  # cuenta sueldo
+            corriente,
+            saldo,
             row[7].encode("utf-8"),
             row[8].encode("utf-8"),
         ]
 
         try:
-            curs.execute("INSERT INTO debit VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", to_db)
+
+            curs.execute(
+                "INSERT INTO debit(fecha, sucursal_origen, descripcion, referencia, cuenta_sueldo, importe_cuenta_corriente_pesos, saldo_pesos, tarjeta, categoria ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",  # noqa: E501
+                to_db,
+            )
             count = count + 1
         except:  # noqa: E722
             skip = skip + 1

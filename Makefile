@@ -7,6 +7,7 @@ all:
 	poetry run make bumpversion-patch
 	poetry build
 	git push
+	poetry publish
 #   then create PR on GitHub web....and merge
 # 	on local dir, change to main branch and pull
 #	git checkout main

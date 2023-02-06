@@ -58,6 +58,7 @@ def init_sqlite():
     # debito
     sql = """
             CREATE TABLE "debit" (
+                "id" INTEGER PRIMARY KEY AUTOINCREMENT,
                 "fecha" DATE NULL,
                 "sucursal_origen" TEXT NULL,
                 "descripcion" TEXT NULL,
@@ -66,7 +67,8 @@ def init_sqlite():
                 "importe_cuenta_corriente_pesos" REAL DEFAULT 0.0,
                 "saldo_pesos" REAL DEFAULT 0.0,
                 "tarjeta" TEXT NULL,
-                "categoria" TEXT NULL
+                "categoria" TEXT NULL,
+                "nota" TEXT NULL
         )
         ;
         """
@@ -80,6 +82,7 @@ def init_sqlite():
     # visa
     sql = """
             CREATE TABLE "visa" (
+                "id" INTEGER PRIMARY KEY AUTOINCREMENT,
                 "fecha" DATE NULL,
                 "descripcion" TEXT NULL,
                 "establecimiento" TEXT NULL,
@@ -87,7 +90,8 @@ def init_sqlite():
                 "importe_pesos" REAL DEFAULT 0.0,
                 "importe_dolares" REAL DEFAULT 0.0,
                 "tarjeta" TEXT NULL,
-                "categoria" TEXT NULL
+                "categoria" TEXT NULL,
+                "nota" TEXT NULL
         )
         ;
         """
@@ -101,6 +105,7 @@ def init_sqlite():
     # amex
     sql = """
             CREATE TABLE "amex" (
+                "id" INTEGER PRIMARY KEY AUTOINCREMENT,
                 "fecha" DATE NULL,
                 "descripcion" TEXT NULL,
                 "establecimiento" TEXT NULL,
@@ -108,7 +113,8 @@ def init_sqlite():
                 "importe_pesos" REAL DEFAULT 0.0,
                 "importe_dolares" REAL DEFAULT 0.0,
                 "tarjeta" TEXT NULL,
-                "categoria" TEXT NULL
+                "categoria" TEXT NULL,
+                "nota" TEXT NULL
         )
         ;
         """
